@@ -60,8 +60,8 @@ def p1_1_cts_gan():
 
         # Train the embedder and recovery networks:
         for itt in range(n_itts):
-            r = next(data_iter)
-            x = r[:, condition_len:, :]
+            p = next(data_iter)
+            x = p[:, condition_len:, :]
             with GradientTape() as tape:
                 h = e_net(x)
                 x_tilde = r_net(h)
@@ -78,8 +78,8 @@ def p1_1_cts_gan():
 
         # Train the supervisor network:
         for itt in range(n_itts):
-            r = next(data_iter)
-            x = r[:, condition_len:, :]
+            p = next(data_iter)
+            x = p[:, condition_len:, :]
             with GradientTape() as tape:
                 h = e_net(x)
                 h_s = s_net(h)
@@ -97,9 +97,9 @@ def p1_1_cts_gan():
         g_loss = a_loss = 0
         for itt in range(n_itts):
             for _ in range(n_gen_itts):
-                r = next(data_iter)
-                c = r[:, :condition_len, :]
-                x = r[:, condition_len:, :]
+                p = next(data_iter)
+                c = p[:, :condition_len, :]
+                x = p[:, condition_len:, :]
 
                 z = next(z_iter)
                 c = reshape(c, (batch_size, -1))
@@ -146,9 +146,9 @@ def p1_1_cts_gan():
                 a_optm.apply_gradients(zip(a_grad, a_vars))
 
             # Train the discriminator network:
-            r = next(data_iter)
-            c = r[:, :condition_len, :]
-            x = r[:, condition_len:, :]
+            p = next(data_iter)
+            c = p[:, :condition_len, :]
+            x = p[:, condition_len:, :]
 
             z = next(z_iter)
             c = reshape(c, (batch_size, -1))

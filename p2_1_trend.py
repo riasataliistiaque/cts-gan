@@ -38,14 +38,12 @@ def p2_1_trend():
         for window in range(oos_len):
             cond_data = oos_diff[window:window + condition_len][f'{stock}']
             if all(cond_data < 0):
-                # print(window, cond_data)
                 bear_list.append(window)
                 break
 
         for window in range(oos_len):
             cond_data = oos_diff[window:window + condition_len][f'{stock}']
             if all(cond_data > 0):
-                # print(window, cond_data)
                 bull_list.append(window)
                 break
 
@@ -53,7 +51,6 @@ def p2_1_trend():
             cond_data = oos_diff[window:window + condition_len][f'{stock}']
             cond_list = (cond_data > 0).tolist()
             if sum([i[0] == i[1] for i in zip(cond_list, check_list)]) == condition_len:
-                # print(window, cond_data)
                 side_list.append(window)
                 break
 
